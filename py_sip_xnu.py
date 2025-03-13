@@ -18,7 +18,7 @@
 from ctypes import CDLL, c_uint, byref
 import platform
 
-__version__ = "1.0.4"
+__version__ = "1.0.5"
 
 SIP_XNU_LIBRARY_NAME = "sip_xnu"
 
@@ -48,6 +48,8 @@ class SipXnu: # pylint: disable=too-many-instance-attributes, too-few-public-met
         OS_BIG_SUR = 20
         OS_MONTEREY = 21
         OS_VENTURA = 22
+        OS_SONOMA = 23
+        OS_SEQUOIA = 24
 
     class _XnuSipBitmask(): # pylint: disable=too-few-public-methods
         CSR_ALLOW_UNTRUSTED_KEXTS = 0x1
@@ -62,6 +64,7 @@ class SipXnu: # pylint: disable=too-many-instance-attributes, too-few-public-met
         CSR_ALLOW_UNAPPROVED_KEXTS = 0x200
         CSR_ALLOW_EXECUTABLE_POLICY_OVERRIDE = 0x400
         CSR_ALLOW_UNAUTHENTICATED_ROOT = 0x800
+        CSR_ALLOW_RESEARCH_GUESTS = 0x1000
 
     class _XnuSipStatus():  # pylint: disable=too-many-instance-attributes # pylint: disable=too-few-public-methods
         def __init__(
@@ -80,6 +83,7 @@ class SipXnu: # pylint: disable=too-many-instance-attributes, too-few-public-met
             self.csr_allow_executable_policy_override = csr_dict[
                 "CSR_ALLOW_EXECUTABLE_POLICY_OVERRIDE"]
             self.csr_allow_unauthenticated_root = csr_dict["CSR_ALLOW_UNAUTHENTICATED_ROOT"]
+            self.csr_allow_research_guests = csr_dict["CSR_ALLOW_RESEARCH_GUESTS"]
 
     class _SipStatus: # pylint: disable=too-many-instance-attributes # pylint: disable=too-few-public-methods
         def __init__(  # pylint: disable=too-many-arguments
@@ -117,7 +121,8 @@ class SipXnu: # pylint: disable=too-many-instance-attributes, too-few-public-met
             "CSR_ALLOW_ANY_RECOVERY_OS": 0,
             "CSR_ALLOW_UNAPPROVED_KEXTS": 0,
             "CSR_ALLOW_EXECUTABLE_POLICY_OVERRIDE": 0,
-            "CSR_ALLOW_UNAUTHENTICATED_ROOT": 0
+            "CSR_ALLOW_UNAUTHENTICATED_ROOT": 0,
+            "CSR_ALLOW_RESEARCH_GUESTS": 0
         }
 
         self.__is_darwin()
